@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var Dice_1 = require("./Dice");
+var defaultDie = new Dice_1["default"]();
+console.log(defaultDie);
+var myRoll = defaultDie.roll();
+console.log(myRoll);
+var maxRoll = defaultDie.roll("max");
+var minRoll = defaultDie.roll("min");
+console.log(maxRoll);
+console.log(minRoll);

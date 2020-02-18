@@ -1,0 +1,15 @@
+{
+  "name": "catan-calc",
+  "version": "1.0.0",
+  "description": "Calculator for Catan",
+  "main": "index.js",
+  "author": "Marlo Boticano <m.boticano@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.5"
+  }
+}
