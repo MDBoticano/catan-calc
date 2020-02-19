@@ -1,30 +1,36 @@
 export default class Dice {
-  faces: number[];
-  numOutcomes: number;
+  outcomes: number[];
 
-  constructor (diceFaces?: number[]) {
-    const faces = diceFaces ? diceFaces : [1, 2, 3, 4, 5, 6];
-    this.faces = faces;
-    this.numOutcomes = faces.length;
-  };
+  constructor(outcomes?: number | number[]) {
+    let sortedOutcomes = [];
 
-  roll (modifier?: string) {
-    let outcome: number;
+    if (outcomes === undefined) { outcomes = 6; }
 
-    switch (modifier) {
-      case "max":
-        const maxOutcome = this.faces.length;
-        outcome =  this.faces[maxOutcome - 1];
-        break;
-      case "min":
-        const minOutcome = this.faces[0];
-        outcome = minOutcome;
-        break;
-      default: 
-        const numOutcomes = this.faces.length;
-        const rollNum = Math.floor(Math.random() * numOutcomes);
-        outcome = this.faces[rollNum];
+    if (typeof outcomes === "number") {
+      sortedOutcomes = [...Array(outcomes).keys()].map(n => n + 1);
+    } else {
+      sortedOutcomes = outcomes.sort();
     }
+    this.outcomes = sortedOutcomes;
+  }
+
+  get numOutcomes () { return this.outcomes.length; }
+
+  get min () { return this.outcomes[0]; } 
+
+  get max () { return this.outcomes[this.numOutcomes - 1]; }
+
+  rollOnce(): number {
+    const rollNum = Math.floor(Math.random() * this.numOutcomes);
+    const outcome = this.outcomes[rollNum];
     return outcome;
-  };
+  }
+
+  rollMultiple(numRolls: number): number[] {
+    const rolls = [];
+    for (let i = 0; i < numRolls; i++) {
+      rolls.push(this.rollOnce());
+    }
+    return rolls;
+  }
 }

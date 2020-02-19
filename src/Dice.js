@@ -1,31 +1,34 @@
 "use strict";
-exports.__esModule = true;
-var Dice = /** @class */ (function () {
-    function Dice(diceFaces) {
-        var faces = diceFaces ? diceFaces : [1, 2, 3, 4, 5, 6];
-        this.faces = faces;
-        this.numOutcomes = faces.length;
-    }
-    ;
-    Dice.prototype.roll = function (modifier) {
-        var outcome;
-        switch (modifier) {
-            case "max":
-                var maxOutcome = this.faces.length;
-                outcome = this.faces[maxOutcome - 1];
-                break;
-            case "min":
-                var minOutcome = this.faces[0];
-                outcome = minOutcome;
-                break;
-            default:
-                var numOutcomes = this.faces.length;
-                var rollNum = Math.floor(Math.random() * numOutcomes);
-                outcome = this.faces[rollNum];
+Object.defineProperty(exports, "__esModule", { value: true });
+class Dice {
+    constructor(outcomes) {
+        let sortedOutcomes = [];
+        if (outcomes === undefined) {
+            outcomes = 6;
         }
+        if (typeof outcomes === "number") {
+            sortedOutcomes = [...Array(outcomes).keys()].map(n => n + 1);
+        }
+        else {
+            sortedOutcomes = outcomes.sort();
+        }
+        this.outcomes = sortedOutcomes;
+    }
+    get numOutcomes() { return this.outcomes.length; }
+    get min() { return this.outcomes[0]; }
+    get max() { return this.outcomes[this.numOutcomes - 1]; }
+    rollOnce() {
+        const rollNum = Math.floor(Math.random() * this.numOutcomes);
+        const outcome = this.outcomes[rollNum];
         return outcome;
-    };
-    ;
-    return Dice;
-}());
-exports["default"] = Dice;
+    }
+    rollMultiple(numRolls) {
+        const rolls = [];
+        for (let i = 0; i < numRolls; i++) {
+            rolls.push(this.rollOnce());
+        }
+        return rolls;
+    }
+}
+exports.default = Dice;
+//# sourceMappingURL=Dice.js.map
