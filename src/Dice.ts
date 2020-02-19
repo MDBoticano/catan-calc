@@ -20,17 +20,20 @@ export default class Dice {
 
   get max () { return this.outcomes[this.numOutcomes - 1]; }
 
-  rollOnce(): number {
-    const rollNum = Math.floor(Math.random() * this.numOutcomes);
-    const outcome = this.outcomes[rollNum];
-    return outcome;
-  }
-
-  rollMultiple(numRolls: number): number[] {
-    const rolls = [];
-    for (let i = 0; i < numRolls; i++) {
-      rolls.push(this.rollOnce());
+  /**
+   * Return an n-number of random outcomes from the array
+   * @param rolls - number of rolls to make (default 1)
+   * @returns roll results in an array
+   */
+  roll(rolls = 1) {
+    const rollDie = () => { 
+      const randomIndex = Math.floor(Math.random() * this.numOutcomes);
+      return this.outcomes[randomIndex]; 
     }
-    return rolls;
+
+    const results = [];
+    for (let i = 0; i < rolls; i++) { results.push(rollDie()); }
+
+    return results;
   }
 }

@@ -17,17 +17,21 @@ class Dice {
     get numOutcomes() { return this.outcomes.length; }
     get min() { return this.outcomes[0]; }
     get max() { return this.outcomes[this.numOutcomes - 1]; }
-    rollOnce() {
-        const rollNum = Math.floor(Math.random() * this.numOutcomes);
-        const outcome = this.outcomes[rollNum];
-        return outcome;
-    }
-    rollMultiple(numRolls) {
-        const rolls = [];
-        for (let i = 0; i < numRolls; i++) {
-            rolls.push(this.rollOnce());
+    /**
+     * Return an n-number of random outcomes from the array
+     * @param rolls - number of rolls to make (default 1)
+     * @returns roll results in an array
+     */
+    roll(rolls = 1) {
+        const rollDie = () => {
+            const randomIndex = Math.floor(Math.random() * this.numOutcomes);
+            return this.outcomes[randomIndex];
+        };
+        const results = [];
+        for (let i = 0; i < rolls; i++) {
+            results.push(rollDie());
         }
-        return rolls;
+        return results;
     }
 }
 exports.default = Dice;
