@@ -33,6 +33,21 @@ class Dice {
         }
         return results;
     }
+    static sumRolls(rolls) {
+        const sum = rolls.reduce((a, b) => a + b);
+        return sum;
+    }
+    static orderRolls(rolls, direction = "descending") {
+        if (direction === "descending") {
+            return rolls.sort((a, b) => b - a);
+        }
+        else if (direction === "ascending") {
+            return rolls.sort();
+        }
+        else {
+            return rolls;
+        }
+    }
 }
 exports.default = Dice;
-//# sourceMappingURL=Dice.js.map
+//# sourceMappingURL=index.js.map

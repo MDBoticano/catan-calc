@@ -36,4 +36,19 @@ export default class Dice {
 
     return results;
   }
+
+  static sumRolls (rolls: number[]) {
+    const sum = rolls.reduce((a, b) => a + b);
+    return sum;
+  }
+
+  static orderRolls (rolls: number[], direction = "descending") {
+    if (direction === "descending") {
+      return rolls.sort((a, b) => b - a);
+    } else if (direction === "ascending") {
+      return rolls.sort();
+    } else {
+      return rolls;
+    }
+  }
 }
