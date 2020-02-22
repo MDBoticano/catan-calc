@@ -54,4 +54,21 @@ describe('Test methods for a default die', () => {
       expect(result.every((x) => rolls.indexOf(x) >= 0));
     });
   });
+
+  describe('generatePermutations:', () => {
+    test('permutations for 1 roll is just the outcomes', () => {
+      const defaultPermutations = defaultDice.rollPermutations(1);
+      expect(defaultPermutations.length).toBe(defaultDice.numOutcomes);
+    });
+
+    test('permutations for 2 rolls is the number of outcomes ** 2', () => {
+      const defaultPermutations = defaultDice.rollPermutations(2);
+      expect(defaultPermutations.length).toBe(defaultDice.numOutcomes**2);
+    });
+
+    test('permutations for 5 rolls is the number of outcomes ** 5', () => {
+      const defaultPermutations = defaultDice.rollPermutations(5);
+      expect(defaultPermutations.length).toBe(defaultDice.numOutcomes**5);
+    });
+  });
 });

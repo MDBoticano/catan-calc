@@ -33,6 +33,26 @@ class Dice {
         }
         return results;
     }
+    rollPermutations(numRolls) {
+        const permutations = [];
+        const currentPermutation = [];
+        const potentialOutcomes = this.outcomes;
+        const numOutcomes = this.numOutcomes;
+        function generatePermutation(numRolls, currentPermutation) {
+            if (numRolls === 0) {
+                permutations.push([...currentPermutation]);
+            }
+            else {
+                for (let i = 0; i < numOutcomes; i++) {
+                    currentPermutation.push(potentialOutcomes[i]);
+                    generatePermutation(numRolls - 1, currentPermutation);
+                    currentPermutation.pop();
+                }
+            }
+        }
+        generatePermutation(numRolls, currentPermutation);
+        return permutations;
+    }
     static sumRolls(rolls) {
         const sum = rolls.reduce((a, b) => a + b);
         return sum;
