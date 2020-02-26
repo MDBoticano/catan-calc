@@ -1,7 +1,5 @@
 import Dice from '../Dice/';
 
-
-
 export default class Catan {
   dice: Dice;
   sumCounts: object;
@@ -11,25 +9,29 @@ export default class Catan {
     this.sumCounts = Catan.calcSumCounts(gameDice);
   }
 
-  // Helper function: used by Catan to calculate sumCounts
+  /**
+   * Calculate the occurences of a sum for all permutations for rolled dice
+   * @param {Dice} dice for the game
+   */
   private static calcSumCounts = (dice: Dice) => {
-  const twoDicePermutations = dice.rollPermutations(2);
-  const twoDicePermutationsSums = twoDicePermutations.map((roll) => {
-    return Dice.sumRolls(roll);
-  });
+    const numDiceRolled = 2;
 
-  const uniqueSums = [...new Set(twoDicePermutationsSums)];
+    const dicePermutations = dice.rollPermutations(numDiceRolled);
+    const dicePermutationsSums = dicePermutations.map((roll) => {
+      return Dice.sumRolls(roll);
+    });
+    const uniqueSums = [...new Set(dicePermutationsSums)];
 
-  // Make an object where each key is a sum, and its value is the chance to roll
-  const sumCounts = {};
-  uniqueSums.forEach((x) => sumCounts[x] = 0);
-  for (let i = 0; i < twoDicePermutationsSums.length; i++) {
-    sumCounts[twoDicePermutationsSums[i]] += 1;
+    // Make an object where each key is a sum, its value is the chance to roll
+    const sumCounts = { total: dicePermutationsSums.length };
+    uniqueSums.forEach((sum) => sumCounts[sum] = 0);
+    for (let i = 0; i < dicePermutationsSums.length; i++) {
+      sumCounts[dicePermutationsSums[i]] += 1;
+    }
+    return sumCounts;
   }
-  return sumCounts;
-}
 
-  calculateChances( adjacentTiles: number[]) {
+  calculateChances(adjacentTiles: number[]) {
     const tileCounts = adjacentTiles.map((key) => this.sumCounts[key]);
     const totalTileChances = tileCounts.reduce((total, chance) => {
       return total + chance;
