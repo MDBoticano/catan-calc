@@ -1,8 +1,12 @@
 import Dice from '../Dice/';
 
+interface SumCounts {
+  [key: string]: number;
+}
+
 export default class Catan {
   dice: Dice;
-  sumCounts: object;
+  sumCounts: SumCounts;
 
   constructor(gameDice = new Dice()) {
     this.dice = gameDice;
@@ -23,7 +27,7 @@ export default class Catan {
     const uniqueSums = [...new Set(dicePermutationsSums)];
 
     // Make an object where each key is a sum, its value is the chance to roll
-    const sumCounts = { total: dicePermutationsSums.length };
+    const sumCounts: SumCounts = { total: dicePermutationsSums.length };
     uniqueSums.forEach((sum) => sumCounts[sum] = 0);
     for (let i = 0; i < dicePermutationsSums.length; i++) {
       sumCounts[dicePermutationsSums[i]] += 1;

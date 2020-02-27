@@ -38,12 +38,12 @@ export default class Dice {
   }
 
   rollPermutations(numRolls: number) {
-    const permutations = [];
-    const currentPermutation = [];
+    const permutations: number[][] = [];
+    const currentPermutation: number[] = [];
     const potentialOutcomes = this.outcomes;
     const numOutcomes = this.numOutcomes;
     
-    function generatePermutation (numRolls, currentPermutation) {
+    function generatePermutation (numRolls: number, currentPermutation: number[]) {
       if (numRolls === 0) {
         permutations.push([...currentPermutation]);
       } else {
