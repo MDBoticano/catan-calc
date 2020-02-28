@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.scss';
 
 import Catan from './components/Catan';
 
   /**
    * @TODOS:
    * 1. Num players to determine max number of deserts (territory value 7)
+   * 2. Don't lose React form focus on input change
    */
 
 const App = () => {
@@ -34,7 +35,7 @@ const App = () => {
     }
 
     return (
-      <div className="myForm__territory">
+      <div className="territories__territory">
         <input
           type="number"
           min="2" max="12"
@@ -47,17 +48,25 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="myForm">
-        <Territory index={0} value={chances[0]} />
-        <Territory index={1} value={chances[1]} />
-        <Territory index={2} value={chances[2]} />
+      <div className="catanForm">
+        <div className="territories">
+          <Territory index={0} value={chances[0]} />
+          <Territory index={1} value={chances[1]} />
+          <Territory index={2} value={chances[2]} />
+        </div>
         
-        <button type="submit" onClick={(e) => calculate(e) }>Calculate</button>
+        <button
+          className="catanForm__submit"
+          type="submit"
+          onClick={(e) => calculate(e)}
+        >
+          Calculate
+        </button>
 
-        <div className="myForm__result">
+        <div className="catanForm__result">
           Result: {totalChance} / 36
         </div>  
-      </div>    
+      </div>
     </div>
   );
 }
