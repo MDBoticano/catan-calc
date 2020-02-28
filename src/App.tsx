@@ -3,35 +3,61 @@ import './App.css';
 
 import Catan from './components/Catan';
 
+  /**
+   * @TODOS:
+   * 1. Num players to determine max number of deserts (territory value 7)
+   */
+
 const App = () => {
-  const [chances, setChances] = useState([0, 0, 0]);
+  const [chances, setChances] = useState([7, 7, 7]);
   const [totalChance, setTotalChance] = useState(0);
   const [myCatan] = useState(new Catan());
 
-  const modifyChances = (index: number, value: number) => {
-    const newChances: number[] = chances;
-    newChances[index] = value;
-    setChances(newChances);
-  }
-
   const calculate = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    
     const calculation = myCatan.calculateChances(chances);
-    console.log(calculation);
     setTotalChance(calculation);
+  }
+
+  type TerritoryProps = { index: number, value: number };
+  const Territory = ({ index, value }: TerritoryProps) => {
+    
+    const modifyChances = (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault();
+
+      const newChances: number[] = [...chances];
+      const newValue: string = event.target.value;
+      newChances[index] = Number(newValue);
+
+      setChances(newChances);
+    }
+
+    return (
+      <div className="myForm__territory">
+        <input
+          type="number"
+          min="2" max="12"
+          value={value}
+          onChange={(event) => modifyChances(event)}
+        />
+      </div>
+    );
   }
 
   return (
     <div className="App">
-      <input type="number" min="2" max="12" onChange={(e) => modifyChances(0, Number(e.target.value))}/>
-      <input type="number" min="2" max="12" onChange={(e) => modifyChances(1, Number(e.target.value))}/>
-      <input type="number" min="2" max="12" onChange={(e) => modifyChances(2, Number(e.target.value))}/>
-      <button type="submit" onClick={(e) => calculate(e) }>Calculate</button>
+      <div className="myForm">
+        <Territory index={0} value={chances[0]} />
+        <Territory index={1} value={chances[1]} />
+        <Territory index={2} value={chances[2]} />
+        
+        <button type="submit" onClick={(e) => calculate(e) }>Calculate</button>
 
-      <div>
-        Result: {totalChance} / 36
-      </div>
-      
+        <div className="myForm__result">
+          Result: {totalChance} / 36
+        </div>  
+      </div>    
     </div>
   );
 }
