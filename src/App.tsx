@@ -9,20 +9,8 @@ import Catan from './components/Catan';
    * 2. Don't lose React form focus on input change
    */
 
-const App = () => {
-  const [chances, setChances] = useState([7, 7, 7]);
-  const [totalChance, setTotalChance] = useState(0);
-  const [myCatan] = useState(new Catan());
-
-  const calculate = (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    
-    const calculation = myCatan.calculateChances(chances);
-    setTotalChance(calculation);
-  }
-
-  type TerritoryProps = { index: number, value: number };
-  const Territory = ({ index, value }: TerritoryProps) => {
+  type TerritoryProps = { index: number, chances: number[], setChances: Function };
+  const Territory = ({ index, chances, setChances }: TerritoryProps) => {
     
     const modifyChances = (event: React.ChangeEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -39,20 +27,32 @@ const App = () => {
         <input
           type="number"
           min="2" max="12"
-          value={value}
+          value={chances[index]}
           onChange={(event) => modifyChances(event)}
         />
       </div>
     );
   }
 
+const App = () => {
+  const [chances, setChances] = useState([7, 7, 7]);
+  const [totalChance, setTotalChance] = useState(0);
+  const [myCatan] = useState(new Catan());
+
+  const calculate = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    
+    const calculation = myCatan.calculateChances(chances);
+    setTotalChance(calculation);
+  }
+
   return (
     <div className="App">
       <div className="catanForm">
         <div className="territories">
-          <Territory index={0} value={chances[0]} />
-          <Territory index={1} value={chances[1]} />
-          <Territory index={2} value={chances[2]} />
+          <Territory index={0} chances={chances} setChances={setChances} />
+          <Territory index={1} chances={chances} setChances={setChances} />
+          <Territory index={2} chances={chances} setChances={setChances} />
         </div>
         
         <button
