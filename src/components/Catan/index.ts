@@ -35,9 +35,15 @@ export default class Catan {
     return sumCounts;
   }
 
+  /**
+   * Return the total chance that the adjacent territories' number will be
+   * rolled. Duplicates are removed. 
+   * @param adjacentTiles numbers on the tiles adjacent to an intersection
+   */
   calculateChances(adjacentTiles: number[]) {
     const tileCounts = adjacentTiles.map((key) => this.sumCounts[key]);
-    const totalTileChances = tileCounts.reduce((total, chance) => {
+    const uniqueRolls = [...new Set(tileCounts)];
+    const totalTileChances = uniqueRolls.reduce((total, chance) => {
       return total + chance;
     });
     return totalTileChances;
